@@ -16,3 +16,7 @@ build/
 # OS files
 .DS_Store
 Thumbs.db
+
+git add .
+git commit -m "Update website with modern design and features"
+git push origin main
