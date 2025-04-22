@@ -6,7 +6,7 @@
     <title>Ask Islamic AI - Islamic Companion</title>
     <link rel="stylesheet" href="styles.css">
     <!-- Add Hugging Face Transformers library -->
-    <script src="https://cdn.jsdelivr.net/npm/@huggingface/inference@1.5.2/dist/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.1/dist/index.min.js"></script>
     <style>
         .chat-container {
             max-width: 800px;
@@ -44,10 +44,14 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .input-area button:hover {
+            background: #45a049;
+        }
         .message {
             margin-bottom: 15px;
             padding: 10px;
             border-radius: 5px;
+            white-space: pre-wrap;
         }
         .user-message {
             background: #e3f2fd;
@@ -56,6 +60,24 @@
         .ai-message {
             background: #f5f5f5;
             margin-right: 20%;
+        }
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .loading {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .loading:after {
+            content: '...';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
         }
     </style>
 </head>
@@ -72,18 +94,31 @@
         <p class="subtitle">Get answers based on Quran and authentic Hadith</p>
         
         <div class="chat-box" id="chatBox">
-            <!-- Messages will appear here -->
+            <!-- Welcome message -->
+            <div class="message ai-message">
+                Assalamu alaikum! I'm your Islamic AI assistant. Feel free to ask questions about:
+                • Quran interpretation
+                • Hadith explanations
+                • Islamic practices
+                • Basic Islamic concepts
+                
+                I'll try my best to provide answers based on authentic sources.
+            </div>
         </div>
 
         <div class="input-area">
-            <textarea id="userInput" placeholder="Type your question about Islam..."></textarea>
+            <textarea 
+                id="userInput" 
+                placeholder="Type your question about Islam..."
+                rows="3"
+            ></textarea>
             <button onclick="askQuestion()">Ask</button>
         </div>
     </div>
 
     <script>
-        // Initialize Hugging Face
-        const hf = new HfInference("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");
+        // Initialize Hugging Face with your token
+        const hf = new HfInference("YOUR-TOKEN-HERE");
         
         async function askQuestion() {
             const input = document.getElementById('userInput');
@@ -98,24 +133,43 @@
 
             try {
                 // Show loading state
-                const loadingId = addMessage('Thinking...', 'ai');
+                const loadingId = addMessage('Thinking...', 'ai loading');
                 
                 // Get response from model
                 const response = await hf.textGeneration({
-                    model: 'gpt2', // We'll change this to a more suitable model
-                    inputs: `Question about Islam: ${question}\nAnswer based on Quran and Hadith:`,
+                    model: 'bigscience/bloomz-560m',  // Using a multilingual model that's good for Q&A
+                    inputs: `You are an Islamic AI assistant that provides accurate information based on the Quran and authentic Hadith.
+                    
+Question: ${question}
+
+Provide a detailed answer with references from Islamic sources where possible. If you're not certain about something, acknowledge that uncertainty.
+
+Answer:`,
                     parameters: {
-                        max_length: 200,
-                        temperature: 0.7
+                        max_length: 500,
+                        temperature: 0.3,
+                        top_p: 0.95,
+                        do_sample: true,
+                        num_return_sequences: 1,
+                        repetition_penalty: 1.2
                     }
                 });
 
-                // Remove loading message and add AI response
+                // Remove loading message
                 removeMessage(loadingId);
-                addMessage(response.generated_text, 'ai');
+
+                // Process and display response
+                if (response && response.generated_text) {
+                    let answer = response.generated_text.trim();
+                    // Clean up the response if needed
+                    answer = answer.replace(/^Answer:|^Response:|^Assistant:/, '').trim();
+                    addMessage(answer, 'ai');
+                } else {
+                    addMessage('I apologize, but I could not generate a proper response. Please try rephrasing your question.', 'ai error-message');
+                }
             } catch (error) {
                 console.error('Error:', error);
-                addMessage('Sorry, I encountered an error. Please try again.', 'ai');
+                addMessage('I apologize for the error. This might be due to API limits or connectivity issues. Please try again in a moment.', 'ai error-message');
             }
         }
 
@@ -124,7 +178,7 @@
             const messageDiv = document.createElement('div');
             const id = Date.now();
             messageDiv.id = id;
-            messageDiv.className = `message ${type}-message`;
+            messageDiv.className = `message ${type}`;
             messageDiv.textContent = text;
             chatBox.appendChild(messageDiv);
             chatBox.scrollTop = chatBox.scrollHeight;
@@ -136,7 +190,7 @@
             if (message) message.remove();
         }
 
-        // Handle Enter key
+        // Handle Enter key (Shift+Enter for new line)
         document.getElementById('userInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
