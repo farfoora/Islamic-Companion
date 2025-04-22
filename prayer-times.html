@@ -1,1 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayer Times - Islamic Companion</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .prayer-times-container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 20px;
+        }
 
+        .prayer-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prayer-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .prayer-icon {
+            font-size: 24px;
+            color: #E67E22;
+            width: 40px;
+            text-align: center;
+        }
+
+        .prayer-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2C3E50;
+        }
+
+        .time-input {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .save-button {
+            background-color: #4A9F66;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .save-button:hover {
+            background-color: #3d8656;
+        }
+
+        .next-prayer {
+            background: #1F4C6B;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .next-prayer h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .next-prayer p {
+            margin: 10px 0 0;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-moon"></i>
+                <span>Islamic Companion</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="daily-wisdom.html">Daily Wisdom</a></li>
+                <li><a href="prayer-times.html">Prayer Times</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="prayer-times-container">
+        <div class="next-prayer">
+            <h2>Next Prayer</h2>
+            <p id="next-prayer-info">Loading...</p>
+        </div>
+
+        <div class="prayer-card">
+            <div class="prayer-info">
+                <i class="fas fa-sun prayer-icon"></i>
+                <span class="prayer-name">Fajr</span>
+            </div>
+            <input type="time" class="time-input" id="fajr-time" value="05:30">
+        </div>
+
+        <div class="prayer-card">
+            <div class="prayer-info">
+                <i class="fas fa-sun prayer-icon"></i>
+                <span class="prayer-name">Sunrise</span>
+            </div>
+            <input type="time" class="time-input" id="sunrise-time" value="06:45">
+        </div>
+
+        <div class="prayer-card">
+            <div class="prayer-info">
+                <i class="fas fa-sun prayer-icon"></i>
+                <span class="prayer-name">Dhuhr</span>
+            </div>
+            <input type="time" class="time-input" id="dhuhr-time" value="12:30">
+        </div>
+
+        <div class="prayer-card">
+            <div class="prayer-info">
+                <i class="fas fa-sun prayer-icon"></i>
+                <span class="prayer-name">Asr</span>
+            </div>
+            <input type="time" class="time-input" id="asr-time" value="15:45">
+        </div>
+
+        <div class="prayer-card">
+            <div class="prayer-info">
+                <i class="fas fa-moon prayer-icon"></i>
+                <span class="prayer-name">Maghrib</span>
+            </div>
+            <input type="time" class="time-input" id="maghrib-time" value="18:15">
+        </div>
+
+        <div class="prayer-card">
+            <div class="prayer-info">
+                <i class="fas fa-moon prayer-icon"></i>
+                <span class="prayer-name">Isha</span>
+            </div>
+            <input type="time" class="time-input" id="isha-time" value="19:45">
+        </div>
+
+        <button class="save-button" onclick="savePrayerTimes()">Save Prayer Times</button>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Islamic Companion. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://github.com/farfoora/islamic-Companion" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Load saved prayer times from localStorage
+        function loadSavedTimes() {
+            const prayers = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
+            prayers.forEach(prayer => {
+                const savedTime = localStorage.getItem(`${prayer}-time`);
+                if (savedTime) {
+                    document.getElementById(`${prayer}-time`).value = savedTime;
+                }
+            });
+            updateNextPrayer();
+        }
+
+        // Save prayer times to localStorage
+        function savePrayerTimes() {
+            const prayers = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
+            prayers.forEach(prayer => {
+                const time = document.getElementById(`${prayer}-time`).value;
+                localStorage.setItem(`${prayer}-time`, time);
+            });
+            updateNextPrayer();
+            alert('Prayer times saved successfully!');
+        }
+
+        // Update next prayer information
+        function updateNextPrayer() {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            
+            const prayers = [
+                { name: 'Fajr', time: getMinutesFromTime(document.getElementById('fajr-time').value) },
+                { name: 'Sunrise', time: getMinutesFromTime(document.getElementById('sunrise-time').value) },
+                { name: 'Dhuhr', time: getMinutesFromTime(document.getElementById('dhuhr-time').value) },
+                { name: 'Asr', time: getMinutesFromTime(document.getElementById('asr-time').value) },
+                { name: 'Maghrib', time: getMinutesFromTime(document.getElementById('maghrib-time').value) },
+                { name: 'Isha', time: getMinutesFromTime(document.getElementById('isha-time').value) }
+            ];
+
+            let nextPrayer = prayers[0];
+            for (let prayer of prayers) {
+                if (prayer.time > currentTime) {
+                    nextPrayer = prayer;
+                    break;
+                }
+            }
+
+            const timeUntil = nextPrayer.time - currentTime;
+            const hoursUntil = Math.floor(timeUntil / 60);
+            const minutesUntil = timeUntil % 60;
+
+            document.getElementById('next-prayer-info').innerHTML = 
+                `${nextPrayer.name} - ${formatTime(nextPrayer.time)}<br>` +
+                `Time until: ${hoursUntil}h ${minutesUntil}m`;
+        }
+
+        // Helper function to convert time string to minutes
+        function getMinutesFromTime(timeStr) {
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            return hours * 60 + minutes;
+        }
+
+        // Helper function to format minutes as time string
+        function formatTime(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+        }
+
+        // Initialize
+        loadSavedTimes();
+        setInterval(updateNextPrayer, 60000); // Update every minute
+    </script>
+</body>
+</html>
