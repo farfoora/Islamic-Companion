@@ -13,6 +13,21 @@
             padding: 20px;
         }
 
+        .date-display {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .date-display .hijri {
+            font-size: 1.2rem;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
         .prayer-card {
             background: white;
             border-radius: 10px;
@@ -22,6 +37,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .prayer-card:hover {
+            transform: translateY(-2px);
         }
 
         .prayer-info {
@@ -32,7 +52,9 @@
 
         .prayer-icon {
             font-size: 24px;
-            color: #E67E22;
+            color: var(--accent-color);
+            width: 40px;
+            text-align: center;
         }
 
         .prayer-name {
@@ -40,15 +62,14 @@
             font-weight: bold;
         }
 
-        .time-input {
-            padding: 5px 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
+        .time-display {
+            font-size: 20px;
+            color: var(--primary-color);
+            font-weight: bold;
         }
 
         .next-prayer {
-            background: #1F4C6B;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2C5282 100%);
             color: white;
             padding: 20px;
             border-radius: 10px;
@@ -64,22 +85,72 @@
         .next-prayer p {
             margin: 10px 0 0;
             font-size: 18px;
+            opacity: 0.9;
         }
 
-        .save-button {
-            background-color: #4A9F66;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+        .settings-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .settings-panel h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .notification-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .notification-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
             cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            margin-top: 20px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
         }
 
-        .save-button:hover {
-            background-color: #3d8656;
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--secondary-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
         }
     </style>
 </head>
@@ -100,9 +171,15 @@
     </nav>
 
     <div class="prayer-times-container">
+        <div class="date-display">
+            <h2 id="gregorian-date">Loading date...</h2>
+            <div class="hijri" id="hijri-date">Loading Hijri date...</div>
+        </div>
+
         <div class="next-prayer">
             <h2>Next Prayer</h2>
             <p id="next-prayer-info">Loading...</p>
+            <p id="time-until">Calculating time...</p>
         </div>
 
         <div class="prayer-card">
@@ -110,7 +187,7 @@
                 <i class="fas fa-sun prayer-icon"></i>
                 <span class="prayer-name">Fajr</span>
             </div>
-            <input type="time" class="time-input" id="fajr-time" value="05:30">
+            <div class="time-display" id="fajr-time">05:30</div>
         </div>
 
         <div class="prayer-card">
@@ -118,7 +195,7 @@
                 <i class="fas fa-sun prayer-icon"></i>
                 <span class="prayer-name">Sunrise</span>
             </div>
-            <input type="time" class="time-input" id="sunrise-time" value="06:45">
+            <div class="time-display" id="sunrise-time">06:45</div>
         </div>
 
         <div class="prayer-card">
@@ -126,7 +203,7 @@
                 <i class="fas fa-sun prayer-icon"></i>
                 <span class="prayer-name">Dhuhr</span>
             </div>
-            <input type="time" class="time-input" id="dhuhr-time" value="12:30">
+            <div class="time-display" id="dhuhr-time">12:30</div>
         </div>
 
         <div class="prayer-card">
@@ -134,7 +211,7 @@
                 <i class="fas fa-sun prayer-icon"></i>
                 <span class="prayer-name">Asr</span>
             </div>
-            <input type="time" class="time-input" id="asr-time" value="15:45">
+            <div class="time-display" id="asr-time">15:45</div>
         </div>
 
         <div class="prayer-card">
@@ -142,7 +219,7 @@
                 <i class="fas fa-moon prayer-icon"></i>
                 <span class="prayer-name">Maghrib</span>
             </div>
-            <input type="time" class="time-input" id="maghrib-time" value="18:15">
+            <div class="time-display" id="maghrib-time">18:15</div>
         </div>
 
         <div class="prayer-card">
@@ -150,45 +227,48 @@
                 <i class="fas fa-moon prayer-icon"></i>
                 <span class="prayer-name">Isha</span>
             </div>
-            <input type="time" class="time-input" id="isha-time" value="19:45">
+            <div class="time-display" id="isha-time">19:45</div>
         </div>
 
-        <button class="save-button" onclick="savePrayerTimes()">Save Prayer Times</button>
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 Islamic Companion. All rights reserved.</p>
-            <div class="social-links">
-                <a href="https://github.com/farfoora/islamic-Companion" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+        <div class="settings-panel">
+            <h3>Settings</h3>
+            <div class="setting-row">
+                <span>Prayer Time Notifications</span>
+                <label class="notification-toggle">
+                    <input type="checkbox" id="notification-toggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="setting-row">
+                <span>Adhan Sound</span>
+                <select id="adhan-sound" class="select-input">
+                    <option value="mecca">Mecca Adhan</option>
+                    <option value="medina">Medina Adhan</option>
+                    <option value="simple">Simple Beep</option>
+                    <option value="none">None</option>
+                </select>
             </div>
         </div>
-    </footer>
+    </div>
 
     <script>
-        // Load saved prayer times from localStorage
-        function loadSavedTimes() {
-            const prayers = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
-            prayers.forEach(prayer => {
-                const savedTime = localStorage.getItem(`${prayer}-time`);
-                if (savedTime) {
-                    document.getElementById(`${prayer}-time`).value = savedTime;
-                }
+        // Update dates
+        function updateDates() {
+            const now = new Date();
+            document.getElementById('gregorian-date').textContent = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
             });
-            updateNextPrayer();
-        }
 
-        // Save prayer times to localStorage
-        function savePrayerTimes() {
-            const prayers = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
-            prayers.forEach(prayer => {
-                const time = document.getElementById(`${prayer}-time`).value;
-                localStorage.setItem(`${prayer}-time`, time);
-            });
-            updateNextPrayer();
-            alert('Prayer times saved successfully!');
+            // Simple Hijri date conversion (this should be replaced with a proper Hijri calendar library)
+            const hijriDate = new Date(now.getTime() + (1000 * 60 * 60 * 24 * -355));
+            document.getElementById('hijri-date').textContent = hijriDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            }) + ' AH';
         }
 
         // Update next prayer information
@@ -197,12 +277,12 @@
             const currentTime = now.getHours() * 60 + now.getMinutes();
             
             const prayers = [
-                { name: 'Fajr', time: getMinutesFromTime(document.getElementById('fajr-time').value) },
-                { name: 'Sunrise', time: getMinutesFromTime(document.getElementById('sunrise-time').value) },
-                { name: 'Dhuhr', time: getMinutesFromTime(document.getElementById('dhuhr-time').value) },
-                { name: 'Asr', time: getMinutesFromTime(document.getElementById('asr-time').value) },
-                { name: 'Maghrib', time: getMinutesFromTime(document.getElementById('maghrib-time').value) },
-                { name: 'Isha', time: getMinutesFromTime(document.getElementById('isha-time').value) }
+                { name: 'Fajr', time: getMinutesFromTime('05:30') },
+                { name: 'Sunrise', time: getMinutesFromTime('06:45') },
+                { name: 'Dhuhr', time: getMinutesFromTime('12:30') },
+                { name: 'Asr', time: getMinutesFromTime('15:45') },
+                { name: 'Maghrib', time: getMinutesFromTime('18:15') },
+                { name: 'Isha', time: getMinutesFromTime('19:45') }
             ];
 
             let nextPrayer = prayers[0];
@@ -217,8 +297,8 @@
             const hoursUntil = Math.floor(timeUntil / 60);
             const minutesUntil = timeUntil % 60;
 
-            document.getElementById('next-prayer-info').innerHTML = 
-                `${nextPrayer.name} - ${formatTime(nextPrayer.time)}<br>` +
+            document.getElementById('next-prayer-info').textContent = `${nextPrayer.name}`;
+            document.getElementById('time-until').textContent = 
                 `Time until: ${hoursUntil}h ${minutesUntil}m`;
         }
 
@@ -228,15 +308,20 @@
             return hours * 60 + minutes;
         }
 
-        // Helper function to format minutes as time string
-        function formatTime(minutes) {
-            const hours = Math.floor(minutes / 60);
-            const mins = minutes % 60;
-            return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
-        }
+        // Notification permission
+        document.getElementById('notification-toggle').addEventListener('change', function(e) {
+            if (e.target.checked) {
+                Notification.requestPermission().then(function(permission) {
+                    if (permission !== 'granted') {
+                        e.target.checked = false;
+                    }
+                });
+            }
+        });
 
         // Initialize
-        loadSavedTimes();
+        updateDates();
+        updateNextPrayer();
         setInterval(updateNextPrayer, 60000); // Update every minute
     </script>
 </body>
