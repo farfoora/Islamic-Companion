@@ -4,19 +4,6 @@
     --accent-color: #E67E22;
     --text-color: #2C3E50;
     --bg-color: #F8F9FA;
-    --card-bg: #FFFFFF;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-}
-
-/* Dark Theme */
-.dark-theme {
-    --primary-color: #64B5F6;
-    --secondary-color: #81C784;
-    --accent-color: #FFB74D;
-    --text-color: #E0E0E0;
-    --bg-color: #1A1A1A;
-    --card-bg: #2D2D2D;
-    --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -30,27 +17,28 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--bg-color);
-    padding-top: 60px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /* Navigation */
 nav {
-    background-color: var(--card-bg);
-    box-shadow: 0 2px 4px var(--shadow-color);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem 0;
 }
 
 .nav-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
 .logo {
@@ -81,37 +69,34 @@ nav {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
-    transition: color 0.3s ease;
-    padding: 5px 10px;
-}
-
-.nav-links a:hover {
-    color: var(--secondary-color);
 }
 
 /* Hero Section */
 .hero {
-    text-align: center;
-    padding: 4rem 2rem;
     background: linear-gradient(135deg, var(--primary-color) 0%, #2C5282 100%);
     color: white;
-    position: relative;
-    overflow: hidden;
+    padding: 6rem 0;
+    text-align: center;
 }
 
 .hero h1 {
     font-size: 3rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .hero p {
     font-size: 1.2rem;
-    max-width: 600px;
-    margin: 0 auto 2rem;
+    margin-bottom: 2rem;
     opacity: 0.9;
 }
 
 /* Buttons */
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
 .btn {
     display: inline-block;
     padding: 12px 24px;
@@ -119,18 +104,11 @@ nav {
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
-    cursor: pointer;
 }
 
 .btn-primary {
     background-color: var(--secondary-color);
     color: white;
-    border: none;
-}
-
-.btn-primary:hover {
-    background-color: #3d8656;
-    transform: translateY(-2px);
 }
 
 .btn-secondary {
@@ -139,15 +117,10 @@ nav {
     color: white;
 }
 
-.btn-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
-}
-
 /* Features Section */
 .features {
-    padding: 5rem 2rem;
-    background-color: var(--card-bg);
+    padding: 6rem 0;
+    background: white;
 }
 
 .section-title {
@@ -165,15 +138,13 @@ nav {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 .feature-card {
-    background-color: var(--card-bg);
+    background: white;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 4px 6px var(--shadow-color);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     text-align: center;
     transition: transform 0.3s ease;
 }
@@ -194,158 +165,11 @@ nav {
     color: var(--primary-color);
 }
 
-/* Prayer Times Page */
-.prayer-times-container {
-    max-width: 800px;
-    margin: 80px auto;
-    padding: 20px;
-}
-
-.prayer-card {
-    background: var(--card-bg);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px var(--shadow-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: transform 0.3s ease;
-}
-
-.prayer-card:hover {
-    transform: translateY(-2px);
-}
-
-.prayer-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.prayer-icon {
-    font-size: 24px;
-    color: var(--accent-color);
-    width: 40px;
-    text-align: center;
-}
-
-.prayer-name {
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--text-color);
-}
-
-.time-input {
-    padding: 5px 10px;
-    border: 1px solid var(--shadow-color);
-    border-radius: 5px;
-    font-size: 16px;
-    background-color: var(--card-bg);
-    color: var(--text-color);
-}
-
-.save-button {
-    background-color: var(--secondary-color);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
-    width: 100%;
-    transition: background-color 0.3s ease;
-}
-
-.save-button:hover {
-    background-color: #3d8656;
-}
-
-.next-prayer {
-    background: var(--primary-color);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-    text-align: center;
-}
-
-.next-prayer h2 {
-    margin: 0;
-    font-size: 24px;
-}
-
-.next-prayer p {
-    margin: 10px 0 0;
-    font-size: 18px;
-    opacity: 0.9;
-}
-
-/* Daily Wisdom Page */
-.wisdom-container {
-    max-width: 800px;
-    margin: 80px auto;
-    padding: 20px;
-}
-
-.wisdom-section {
-    background: var(--card-bg);
-    border-radius: 15px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px var(--shadow-color);
-}
-
-.wisdom-section h2 {
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.wisdom-section h2 i {
-    color: var(--accent-color);
-}
-
-.arabic-text {
-    font-family: 'Amiri', serif;
-    font-size: 2rem;
-    text-align: center;
-    margin: 1.5rem 0;
-    line-height: 2;
-    color: var(--primary-color);
-    direction: rtl;
-}
-
-.translation {
-    text-align: center;
-    font-size: 1.2rem;
-    margin: 1rem 0;
-    color: var(--text-color);
-}
-
-.reference {
-    text-align: center;
-    color: var(--accent-color);
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
-}
-
-.tafsir, .explanation {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--shadow-color);
-    color: var(--text-color);
-}
-
 /* Footer */
 footer {
-    background-color: var(--primary-color);
+    background: var(--primary-color);
     color: white;
     padding: 3rem 0;
-    margin-top: 4rem;
 }
 
 .footer-content {
@@ -354,7 +178,7 @@ footer {
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 20px;
 }
 
 .social-links {
@@ -365,11 +189,6 @@ footer {
 .social-links a {
     color: white;
     font-size: 1.5rem;
-    transition: color 0.3s ease;
-}
-
-.social-links a:hover {
-    color: var(--accent-color);
 }
 
 /* Responsive Design */
@@ -381,17 +200,16 @@ footer {
 
     .nav-links {
         flex-direction: column;
-        gap: 1rem;
         text-align: center;
-        width: 100%;
     }
 
     .hero h1 {
         font-size: 2rem;
     }
 
-    .features-grid {
-        grid-template-columns: 1fr;
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
     }
 
     .footer-content {
@@ -399,47 +217,4 @@ footer {
         gap: 1rem;
         text-align: center;
     }
-
-    .prayer-card {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-    }
-
-    .time-input {
-        width: 100%;
-    }
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.feature-card,
-.prayer-card,
-.wisdom-section {
-    animation: fadeIn 0.5s ease forwards;
-}
-
-/* Theme Toggle */
-.theme-toggle {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    transition: color 0.3s ease;
-}
-
-.theme-toggle:hover {
-    color: var(--accent-color);
 }
