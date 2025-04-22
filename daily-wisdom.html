@@ -1,54 +1,144 @@
-<!-- Add these lines before your script tag in daily-wisdom.html -->
-<script src="data/quran.js"></script>
-<script src="data/hadith.js"></script>
-<script src="data/dhikr.js"></script>
-<script>
-    // Function to get a random item from an array
-    function getRandomItem(array) {
-        return array[Math.floor(Math.random() * array.length)];
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Wisdom - Islamic Companion</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-moon"></i>
+                <span>Islamic Companion</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="daily-wisdom.html">Daily Wisdom</a></li>
+                <li><a href="index.html#about">About</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    // Load daily content
-    function loadDailyContent() {
-        // Load Quran verse
-        const dailyVerse = getRandomItem(window.quranVerses);
-        document.getElementById('quran-arabic').textContent = dailyVerse.arabic;
-        document.getElementById('quran-translation').textContent = dailyVerse.translation;
-        document.getElementById('quran-reference').textContent = dailyVerse.reference;
-        document.getElementById('quran-tafsir').textContent = dailyVerse.tafsir;
+    <main class="wisdom-container">
+        <section id="daily-quran" class="wisdom-section">
+            <h2><i class="fas fa-book-quran"></i> Today's Quranic Verse</h2>
+            <div class="wisdom-card">
+                <div class="arabic-text" id="quran-arabic"></div>
+                <div class="translation" id="quran-translation"></div>
+                <div class="reference" id="quran-reference"></div>
+                <div class="tafsir" id="quran-tafsir"></div>
+            </div>
+        </section>
 
-        // Load Hadith (once hadith.js is added)
-        if (window.hadithCollection) {
-            const dailyHadith = getRandomItem(window.hadithCollection);
-            document.getElementById('hadith-arabic').textContent = dailyHadith.arabic;
-            document.getElementById('hadith-translation').textContent = dailyHadith.translation;
-            document.getElementById('hadith-narrator').textContent = `Narrator: ${dailyHadith.narrator}`;
-            document.getElementById('hadith-source').textContent = `Source: ${dailyHadith.source}`;
-            document.getElementById('hadith-explanation').textContent = dailyHadith.explanation;
+        <section id="daily-hadith" class="wisdom-section">
+            <h2><i class="fas fa-pray"></i> Today's Hadith</h2>
+            <div class="wisdom-card">
+                <div class="arabic-text" id="hadith-arabic"></div>
+                <div class="translation" id="hadith-translation"></div>
+                <div class="narrator" id="hadith-narrator"></div>
+                <div class="source" id="hadith-source"></div>
+                <div class="explanation" id="hadith-explanation"></div>
+            </div>
+        </section>
+
+        <section id="daily-dhikr" class="wisdom-section">
+            <h2><i class="fas fa-heart"></i> Today's Dhikr</h2>
+            <div class="wisdom-card">
+                <div class="arabic-text" id="dhikr-arabic"></div>
+                <div class="transliteration" id="dhikr-transliteration"></div>
+                <div class="translation" id="dhikr-translation"></div>
+                <div class="virtue" id="dhikr-virtue"></div>
+                <div class="counter-container">
+                    <span id="dhikr-count">0</span> / <span id="dhikr-target">33</span>
+                    <button id="dhikr-button" class="counter-button">Count</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Islamic Companion. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://github.com/farfoora/islamic-Companion" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add the data files -->
+    <script src="data/quran.js"></script>
+    <script src="data/hadith.js"></script>
+    <script src="data/dhikr.js"></script>
+
+    <!-- Add the main script -->
+    <script>
+        // Function to get a random item from an array
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
         }
 
-        // Load Dhikr (once dhikr.js is added)
-        if (window.dhikrCollection) {
-            const dailyDhikr = getRandomItem(window.dhikrCollection);
-            document.getElementById('dhikr-arabic').textContent = dailyDhikr.arabic;
-            document.getElementById('dhikr-transliteration').textContent = dailyDhikr.transliteration;
-            document.getElementById('dhikr-translation').textContent = dailyDhikr.translation;
-            document.getElementById('dhikr-virtue').textContent = dailyDhikr.virtue;
-            document.getElementById('dhikr-target').textContent = dailyDhikr.count;
-        }
-    }
+        // Load daily content
+        function loadDailyContent() {
+            console.log('Loading daily content...');
+            
+            // Load Quran verse
+            if (window.quranVerses) {
+                console.log('Loading Quran verse...');
+                const dailyVerse = getRandomItem(window.quranVerses);
+                document.getElementById('quran-arabic').textContent = dailyVerse.arabic;
+                document.getElementById('quran-translation').textContent = dailyVerse.translation;
+                document.getElementById('quran-reference').textContent = dailyVerse.reference;
+                document.getElementById('quran-tafsir').textContent = dailyVerse.tafsir;
+            }
 
-    // Initialize dhikr counter
-    let dhikrCount = 0;
-    document.getElementById('dhikr-button').addEventListener('click', () => {
-        dhikrCount++;
-        document.getElementById('dhikr-count').textContent = dhikrCount;
-        if (dhikrCount >= parseInt(document.getElementById('dhikr-target').textContent)) {
-            document.getElementById('dhikr-button').disabled = true;
-            document.getElementById('dhikr-button').textContent = 'Complete!';
-        }
-    });
+            // Load Hadith
+            if (window.hadithCollection) {
+                console.log('Loading Hadith...');
+                const dailyHadith = getRandomItem(window.hadithCollection);
+                document.getElementById('hadith-arabic').textContent = dailyHadith.arabic;
+                document.getElementById('hadith-translation').textContent = dailyHadith.translation;
+                document.getElementById('hadith-narrator').textContent = `Narrator: ${dailyHadith.narrator}`;
+                document.getElementById('hadith-source').textContent = `Source: ${dailyHadith.source}`;
+                document.getElementById('hadith-explanation').textContent = dailyHadith.explanation;
+            }
 
-    // Load content when page loads
-    document.addEventListener('DOMContentLoaded', loadDailyContent);
-</script>
+            // Load Dhikr
+            if (window.dhikrCollection) {
+                console.log('Loading Dhikr...');
+                const dailyDhikr = getRandomItem(window.dhikrCollection);
+                document.getElementById('dhikr-arabic').textContent = dailyDhikr.arabic;
+                document.getElementById('dhikr-transliteration').textContent = dailyDhikr.transliteration;
+                document.getElementById('dhikr-translation').textContent = dailyDhikr.translation;
+                document.getElementById('dhikr-virtue').textContent = dailyDhikr.virtue;
+                document.getElementById('dhikr-target').textContent = dailyDhikr.count;
+            }
+        }
+
+        // Initialize dhikr counter
+        let dhikrCount = 0;
+        const dhikrButton = document.getElementById('dhikr-button');
+        if (dhikrButton) {
+            dhikrButton.addEventListener('click', () => {
+                dhikrCount++;
+                document.getElementById('dhikr-count').textContent = dhikrCount;
+                if (dhikrCount >= parseInt(document.getElementById('dhikr-target').textContent)) {
+                    dhikrButton.disabled = true;
+                    dhikrButton.textContent = 'Complete!';
+                }
+            });
+        }
+
+        // Load content when page loads
+        document.addEventListener('DOMContentLoaded', loadDailyContent);
+        // Also try loading immediately in case DOMContentLoaded already fired
+        loadDailyContent();
+    </script>
+</body>
+</html>
