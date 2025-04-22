@@ -4,6 +4,7 @@
     --accent-color: #E67E22;
     --text-color: #2C3E50;
     --bg-color: #F8F9FA;
+    --card-bg: #FFFFFF;
 }
 
 * {
@@ -29,16 +30,19 @@ body {
 nav {
     background: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
 }
 
 .nav-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1rem;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
 }
 
 .logo {
@@ -69,24 +73,31 @@ nav {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--secondary-color);
 }
 
 /* Hero Section */
 .hero {
+    padding: 8rem 2rem 4rem;
+    text-align: center;
     background: linear-gradient(135deg, var(--primary-color) 0%, #2C5282 100%);
     color: white;
-    padding: 6rem 0;
-    text-align: center;
+    margin-top: -60px;
 }
 
 .hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .hero p {
     font-size: 1.2rem;
-    margin-bottom: 2rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
     opacity: 0.9;
 }
 
@@ -111,16 +122,26 @@ nav {
     color: white;
 }
 
+.btn-primary:hover {
+    background-color: #3d8656;
+    transform: translateY(-2px);
+}
+
 .btn-secondary {
     background-color: transparent;
     border: 2px solid white;
     color: white;
 }
 
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
 /* Features Section */
 .features {
-    padding: 6rem 0;
-    background: white;
+    padding: 5rem 2rem;
+    background-color: white;
 }
 
 .section-title {
@@ -136,8 +157,10 @@ nav {
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .feature-card {
@@ -165,9 +188,33 @@ nav {
     color: var(--primary-color);
 }
 
+/* About Section */
+.about {
+    padding: 5rem 2rem;
+    background-color: var(--bg-color);
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.about-content ul {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.about-content li {
+    margin-bottom: 0.5rem;
+}
+
 /* Footer */
 footer {
-    background: var(--primary-color);
+    background-color: var(--primary-color);
     color: white;
     padding: 3rem 0;
 }
@@ -178,7 +225,7 @@ footer {
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 2rem;
 }
 
 .social-links {
@@ -189,6 +236,11 @@ footer {
 .social-links a {
     color: white;
     font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--accent-color);
 }
 
 /* Responsive Design */
@@ -210,6 +262,10 @@ footer {
     .cta-buttons {
         flex-direction: column;
         align-items: center;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
     }
 
     .footer-content {
