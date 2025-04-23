@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Keep your existing head content -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask Islamic AI - Islamic Companion</title>
+    <link rel="stylesheet" href="styles.css">
     <!-- Add OpenAI API -->
     <script src="https://cdn.jsdelivr.net/npm/openai@4.0.0/dist/openai.min.js"></script>
+    <style>
+// ... existing code ...
+    </style>
 </head>
 <body>
-    <!-- Keep your existing nav and container HTML -->
+// ... existing code ...
 
     <script>
         // Initialize OpenAI - Replace with your API key
@@ -67,7 +73,30 @@
             }
         }
 
-        // Keep your existing helper functions (addMessage, removeMessage, etc.)
+        function addMessage(text, type) {
+            const chatBox = document.getElementById('chatBox');
+            const messageDiv = document.createElement('div');
+            const id = Date.now();
+            messageDiv.id = id;
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = text;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return id;
+        }
+
+        function removeMessage(id) {
+            const message = document.getElementById(id);
+            if (message) message.remove();
+        }
+
+        // Handle Enter key (Shift+Enter for new line)
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                askQuestion();
+            }
+        });
     </script>
 </body>
 </html>
