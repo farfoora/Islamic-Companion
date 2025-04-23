@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Islamic Companion - Your Spiritual Guide</title>
+    <title>Islamic Companion - Your Daily Guide</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav>
@@ -15,86 +14,75 @@
                 <i class="fas fa-moon"></i>
                 <span>Islamic Companion</span>
             </a>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#features">Features</a></li>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
                 <li><a href="daily-wisdom.html">Daily Wisdom</a></li>
                 <li><a href="prayer-times.html">Prayer Times</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="ask-ai.html">Ask AI</a></li>
+                <li><a href="index.html#about">About</a></li>
             </ul>
         </div>
     </nav>
 
-    <section id="home" class="hero">
-        <div class="container">
+    <main>
+        <section class="hero">
             <h1>Welcome to Islamic Companion</h1>
             <p>Insha'Allah this will guide you daily with ayat, hadith, and remembrance.</p>
             <div class="cta-buttons">
-                <a href="daily-wisdom.html" class="btn btn-primary">Get Daily Wisdom</a>
-                <a href="#features" class="btn btn-secondary">Learn More</a>
+                <a href="daily-wisdom.html" class="cta-button primary">Get Daily Wisdom</a>
+                <a href="#features" class="cta-button secondary">Learn More</a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Features</h2>
-                <p>Discover the spiritual guidance and wisdom we offer</p>
-            </div>
-            <div class="features-grid">
+        <section id="features" class="features">
+            <h2>Our Features</h2>
+            <p>Discover the spiritual guidance and wisdom we offer</p>
+            <div class="feature-grid">
                 <div class="feature-card">
                     <i class="fas fa-book-quran"></i>
                     <h3>Quranic Verses</h3>
-                    <p>Daily verses from the Holy Quran with translations and tafsir</p>
+                    <p>Daily verses with translations and interpretations</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-pray"></i>
                     <h3>Authentic Hadith</h3>
-                    <p>Verified teachings from Prophet Muhammad ﷺ</p>
+                    <p>Verified hadith from trusted sources</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-heart"></i>
                     <h3>Daily Dhikr</h3>
-                    <p>Remember Allah through daily prescribed remembrances</p>
+                    <p>Remember Allah with daily dhikr reminders</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-clock"></i>
                     <h3>Prayer Times</h3>
-                    <p>Keep track of daily prayer times and get notifications</p>
+                    <p>Accurate prayer times for your location</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="about" class="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Islamic Companion</h2>
-                <p>Your gentle, spiritually grounded support drawn from authentic sources</p>
-            </div>
-            <div class="about-content">
-                <p>Islamic Companion is designed to be your daily source of spiritual guidance, offering:</p>
-                <ul>
-                    <li>Authentic Quranic verses with translations and tafsir</li>
-                    <li>Verified hadith from reliable sources</li>
-                    <li>Daily dhikr and remembrance</li>
-                    <li>Prayer time tracking and notifications</li>
-                </ul>
-                <p>All content is carefully curated from authentic Islamic sources to ensure accuracy and reliability.</p>
-            </div>
-        </div>
-    </section>
+        <section id="about" class="about">
+            <h2>About Us</h2>
+            <p>Islamic Companion is dedicated to providing authentic Islamic knowledge and guidance to Muslims worldwide. Our mission is to make Islamic learning accessible and engaging for everyone.</p>
+        </section>
+    </main>
 
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 Islamic Companion. All rights reserved.</p>
-            <div class="social-links">
-                <a href="https://github.com/farfoora/islamic-Companion" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
+        <p>&copy; 2024 Islamic Companion. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
