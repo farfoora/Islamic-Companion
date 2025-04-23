@@ -5,18 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ask Islamic AI - Islamic Companion</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Add OpenAI API -->
     <script src="https://cdn.jsdelivr.net/npm/openai@4.0.0/dist/openai.min.js"></script>
-    <style>
-// ... existing code ...
-    </style>
 </head>
 <body>
-// ... existing code ...
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-moon"></i>
+                <span>Islamic Companion</span>
+            </a>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="daily-wisdom.html">Daily Wisdom</a></li>
+                <li><a href="prayer-times.html">Prayer Times</a></li>
+                <li><a href="ask-ai.html" class="active">Ask AI</a></li>
+                <li><a href="index.html#about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="chat-container">
+        <h1>Ask Islamic Questions</h1>
+        <p class="subtitle">Get answers based on Quran and authentic Hadith</p>
+        
+        <div class="chat-box" id="chatBox">
+            <!-- Welcome message -->
+            <div class="message ai-message">
+                Assalamu alaikum! I'm your Islamic AI assistant. Feel free to ask questions about:
+                • Quran interpretation
+                • Hadith explanations
+                • Islamic practices
+                • Basic Islamic concepts
+                
+                I'll try my best to provide answers based on authentic sources.
+            </div>
+        </div>
+
+        <div class="input-area">
+            <textarea 
+                id="userInput" 
+                placeholder="Type your question about Islam..."
+                rows="3"
+            ></textarea>
+            <button onclick="askQuestion()">Ask</button>
+        </div>
+    </div>
 
     <script>
         // Initialize OpenAI - Replace with your API key
-        const OPENAI_API_KEY = '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'; // Replace this with your actual OpenAI API key
+        const OPENAI_API_KEY = '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';
         
         async function askQuestion() {
             const input = document.getElementById('userInput');
@@ -96,6 +140,11 @@
                 e.preventDefault();
                 askQuestion();
             }
+        });
+
+        // Add mobile menu toggle functionality
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
         });
     </script>
 </body>
