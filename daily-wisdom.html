@@ -6,7 +6,6 @@
     <title>Daily Wisdom - Islamic Companion</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav>
@@ -15,130 +14,60 @@
                 <i class="fas fa-moon"></i>
                 <span>Islamic Companion</span>
             </a>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="index.html#features">Features</a></li>
-                <li><a href="daily-wisdom.html">Daily Wisdom</a></li>
+                <li><a href="daily-wisdom.html" class="active">Daily Wisdom</a></li>
+                <li><a href="prayer-times.html">Prayer Times</a></li>
+                <li><a href="ask-ai.html">Ask AI</a></li>
                 <li><a href="index.html#about">About</a></li>
             </ul>
         </div>
     </nav>
 
     <main class="wisdom-container">
-        <section id="daily-quran" class="wisdom-section">
-            <h2><i class="fas fa-book-quran"></i> Today's Quranic Verse</h2>
-            <div class="wisdom-card">
-                <div class="arabic-text" id="quran-arabic"></div>
-                <div class="translation" id="quran-translation"></div>
-                <div class="reference" id="quran-reference"></div>
-                <div class="tafsir" id="quran-tafsir"></div>
-            </div>
-        </section>
-
-        <section id="daily-hadith" class="wisdom-section">
-            <h2><i class="fas fa-pray"></i> Today's Hadith</h2>
-            <div class="wisdom-card">
-                <div class="arabic-text" id="hadith-arabic"></div>
-                <div class="translation" id="hadith-translation"></div>
-                <div class="narrator" id="hadith-narrator"></div>
-                <div class="source" id="hadith-source"></div>
-                <div class="explanation" id="hadith-explanation"></div>
-            </div>
-        </section>
-
-        <section id="daily-dhikr" class="wisdom-section">
-            <h2><i class="fas fa-heart"></i> Today's Dhikr</h2>
-            <div class="wisdom-card">
-                <div class="arabic-text" id="dhikr-arabic"></div>
-                <div class="transliteration" id="dhikr-transliteration"></div>
-                <div class="translation" id="dhikr-translation"></div>
-                <div class="virtue" id="dhikr-virtue"></div>
-                <div class="counter-container">
-                    <span id="dhikr-count">0</span> / <span id="dhikr-target">33</span>
-                    <button id="dhikr-button" class="counter-button">Count</button>
+        <h1>Daily Islamic Wisdom</h1>
+        <div class="wisdom-card">
+            <div class="verse-section">
+                <h2>Verse of the Day</h2>
+                <div id="daily-verse" class="content-box">
+                    <!-- Verse content will be loaded here -->
                 </div>
             </div>
-        </section>
+            
+            <div class="hadith-section">
+                <h2>Hadith of the Day</h2>
+                <div id="daily-hadith" class="content-box">
+                    <!-- Hadith content will be loaded here -->
+                </div>
+            </div>
+            
+            <div class="dhikr-section">
+                <h2>Daily Dhikr</h2>
+                <div id="daily-dhikr" class="content-box">
+                    <!-- Dhikr content will be loaded here -->
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 Islamic Companion. All rights reserved.</p>
-            <div class="social-links">
-                <a href="https://github.com/farfoora/islamic-Companion" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
+        <p>&copy; 2024 Islamic Companion. All rights reserved.</p>
     </footer>
 
-    <!-- Add the data files -->
-    <script src="data/quran.js"></script>
-    <script src="data/hadith.js"></script>
-    <script src="data/dhikr.js"></script>
-
-    <!-- Add the main script -->
     <script>
-        // Function to get a random item from an array
-        function getRandomItem(array) {
-            return array[Math.floor(Math.random() * array.length)];
-        }
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
 
-        // Load daily content
-        function loadDailyContent() {
-            console.log('Loading daily content...');
-            
-            // Load Quran verse
-            if (window.quranVerses) {
-                console.log('Loading Quran verse...');
-                const dailyVerse = getRandomItem(window.quranVerses);
-                document.getElementById('quran-arabic').textContent = dailyVerse.arabic;
-                document.getElementById('quran-translation').textContent = dailyVerse.translation;
-                document.getElementById('quran-reference').textContent = dailyVerse.reference;
-                document.getElementById('quran-tafsir').textContent = dailyVerse.tafsir;
-            }
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
 
-            // Load Hadith
-            if (window.hadithCollection) {
-                console.log('Loading Hadith...');
-                const dailyHadith = getRandomItem(window.hadithCollection);
-                document.getElementById('hadith-arabic').textContent = dailyHadith.arabic;
-                document.getElementById('hadith-translation').textContent = dailyHadith.translation;
-                document.getElementById('hadith-narrator').textContent = `Narrator: ${dailyHadith.narrator}`;
-                document.getElementById('hadith-source').textContent = `Source: ${dailyHadith.source}`;
-                document.getElementById('hadith-explanation').textContent = dailyHadith.explanation;
-            }
-
-            // Load Dhikr
-            if (window.dhikrCollection) {
-                console.log('Loading Dhikr...');
-                const dailyDhikr = getRandomItem(window.dhikrCollection);
-                document.getElementById('dhikr-arabic').textContent = dailyDhikr.arabic;
-                document.getElementById('dhikr-transliteration').textContent = dailyDhikr.transliteration;
-                document.getElementById('dhikr-translation').textContent = dailyDhikr.translation;
-                document.getElementById('dhikr-virtue').textContent = dailyDhikr.virtue;
-                document.getElementById('dhikr-target').textContent = dailyDhikr.count;
-            }
-        }
-
-        // Initialize dhikr counter
-        let dhikrCount = 0;
-        const dhikrButton = document.getElementById('dhikr-button');
-        if (dhikrButton) {
-            dhikrButton.addEventListener('click', () => {
-                dhikrCount++;
-                document.getElementById('dhikr-count').textContent = dhikrCount;
-                if (dhikrCount >= parseInt(document.getElementById('dhikr-target').textContent)) {
-                    dhikrButton.disabled = true;
-                    dhikrButton.textContent = 'Complete!';
-                }
-            });
-        }
-
-        // Load content when page loads
-        document.addEventListener('DOMContentLoaded', loadDailyContent);
-        // Also try loading immediately in case DOMContentLoaded already fired
-        loadDailyContent();
+        // Add your wisdom loading logic here
     </script>
 </body>
 </html>
