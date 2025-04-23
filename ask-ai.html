@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ask Islamic AI - Islamic Companion</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Add Hugging Face Transformers library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.1/dist/index.min.js"></script>
     <style>
         .chat-container {
@@ -23,6 +23,7 @@
             padding: 15px;
             margin-bottom: 20px;
             border-radius: 5px;
+            background: #f8f9fa;
         }
         .input-area {
             display: flex;
@@ -35,6 +36,7 @@
             border-radius: 5px;
             resize: vertical;
             min-height: 50px;
+            font-family: inherit;
         }
         .input-area button {
             padding: 10px 20px;
@@ -43,23 +45,27 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         .input-area button:hover {
             background: #45a049;
         }
         .message {
             margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 5px;
+            padding: 12px;
+            border-radius: 8px;
             white-space: pre-wrap;
+            animation: fadeIn 0.3s ease-out;
         }
         .user-message {
             background: #e3f2fd;
             margin-left: 20%;
+            border-bottom-right-radius: 2px;
         }
         .ai-message {
             background: #f5f5f5;
             margin-right: 20%;
+            border-bottom-left-radius: 2px;
         }
         .error-message {
             background: #ffebee;
@@ -69,6 +75,8 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            color: #666;
+            font-style: italic;
         }
         .loading:after {
             content: '...';
@@ -79,14 +87,41 @@
             40% { content: '..'; }
             60%, 100% { content: '...'; }
         }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #1B4B79;
+            text-align: center;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="daily-wisdom.html">Daily Wisdom</a>
-        <a href="prayer-times.html">Prayer Times</a>
-        <a href="ask-ai.html" class="active">Ask AI</a>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-moon"></i>
+                <span>Islamic Companion</span>
+            </a>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="daily-wisdom.html">Daily Wisdom</a></li>
+                <li><a href="prayer-times.html">Prayer Times</a></li>
+                <li><a href="ask-ai.html" class="active">Ask AI</a></li>
+                <li><a href="index.html#about">About</a></li>
+            </ul>
+        </div>
     </nav>
 
     <div class="chat-container">
@@ -94,15 +129,14 @@
         <p class="subtitle">Get answers based on Quran and authentic Hadith</p>
         
         <div class="chat-box" id="chatBox">
-            <!-- Welcome message -->
             <div class="message ai-message">
                 Assalamu alaikum! I'm your Islamic AI assistant. Feel free to ask questions about:
                 • Quran interpretation
                 • Hadith explanations
                 • Islamic practices
                 • Basic Islamic concepts
-                
-                I'll try my best to provide answers based on authentic sources.
+
+                I'll try my best to provide answers based on authentic sources. If I'm not certain about something, I'll let you know.
             </div>
         </div>
 
@@ -118,7 +152,7 @@
 
     <script>
         // Initialize Hugging Face with your token
-        const hf = new HfInference("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");
+        const hf = new HfInference("YOUR_NEW_TOKEN_HERE"); // Replace this with your new token
         
         async function askQuestion() {
             const input = document.getElementById('userInput');
@@ -137,17 +171,15 @@
                 
                 // Get response from model
                 const response = await hf.textGeneration({
-                    model: 'bigscience/bloomz-560m',  // Using a multilingual model that's good for Q&A
-                    inputs: `You are an Islamic AI assistant that provides accurate information based on the Quran and authentic Hadith.
-                    
+                    model: 'google/flan-t5-large',
+                    inputs: `You are a knowledgeable Islamic AI assistant. Provide an accurate and respectful answer to this question based on Quran and authentic Hadith. If you're not certain about any aspect, clearly state that.
+
 Question: ${question}
 
-Provide a detailed answer with references from Islamic sources where possible. If you're not certain about something, acknowledge that uncertainty.
-
-Answer:`,
+Provide a clear, concise, and well-structured answer:`,
                     parameters: {
                         max_length: 500,
-                        temperature: 0.3,
+                        temperature: 0.7,
                         top_p: 0.95,
                         do_sample: true,
                         num_return_sequences: 1,
@@ -161,7 +193,7 @@ Answer:`,
                 // Process and display response
                 if (response && response.generated_text) {
                     let answer = response.generated_text.trim();
-                    // Clean up the response if needed
+                    // Clean up the response
                     answer = answer.replace(/^Answer:|^Response:|^Assistant:/, '').trim();
                     addMessage(answer, 'ai');
                 } else {
@@ -196,6 +228,14 @@ Answer:`,
                 e.preventDefault();
                 askQuestion();
             }
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
         });
     </script>
 </body>
