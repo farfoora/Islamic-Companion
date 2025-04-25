@@ -1,34 +1,19 @@
-/* Main Variables */
+/* Main Variables - Matching your website's dark theme with green accents */
 :root {
-    --primary-color: #0d8769;         /* Islamic green */
-    --secondary-color: #4a90e2;       /* Complementary blue */
-    --accent-color: #f8d56f;          /* Warm gold accent */
-    --bg-color: #f8f9fa;              /* Light background */
-    --card-bg: #ffffff;               /* Card background */
-    --text-color: #333333;            /* Main text color */
-    --light-text: #777777;            /* Secondary text */
-    --border-color: rgba(0,0,0,0.1);  /* Border color */
-    --shadow: 0 2px 10px rgba(0,0,0,0.1); /* Standard shadow */
+    --primary-color: #4CAF50;         /* Green accent color matching your site */
+    --secondary-color: #388E3C;       /* Darker green for hover states */
+    --accent-color: #8BC34A;          /* Lighter green for highlights */
+    --bg-color: #1C1C1C;              /* Dark background matching your site */
+    --card-bg: #242424;               /* Slightly lighter than background for cards */
+    --text-color: #E0E0E0;            /* Light text for readability */
+    --light-text: #9E9E9E;            /* Secondary text */
+    --border-color: rgba(255,255,255,0.1); /* Subtle light borders */
+    --shadow: 0 2px 10px rgba(0,0,0,0.3); /* Shadow for depth */
 }
 
-/* Dark mode variables */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --primary-color: #12a37f;     /* Brighter green for dark mode */
-        --secondary-color: #5d9ced;   /* Brighter blue for dark mode */
-        --accent-color: #f9dc83;      /* Brighter gold for dark mode */
-        --bg-color: #121212;          /* Dark background */
-        --card-bg: #1e1e1e;           /* Dark card background */
-        --text-color: #e0e0e0;        /* Light text for dark mode */
-        --light-text: #b0b0b0;        /* Secondary light text */
-        --border-color: rgba(255,255,255,0.1); /* Light border color */
-        --shadow: 0 2px 10px rgba(0,0,0,0.3); /* Darker shadow */
-    }
-}
-
-/* Base Typography */
+/* Base Typography to match your site */
 body {
-    font-family: 'Noto Sans', 'Noto Sans Arabic', 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--bg-color);
@@ -36,11 +21,8 @@ body {
 
 /* Chat Section Styles */
 .chat-section {
-    padding: 80px 0;
+    padding: 60px 0;
     background: var(--bg-color);
-    background-image: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), 
-                      url('data:image/svg+xml,%3Csvg width="20" height="20" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M0 0h20v20H0z" fill="%230d8769" opacity="0.05"/%3E%3C/svg%3E');
-    background-size: 20px 20px;
 }
 
 .chat-container {
@@ -48,14 +30,9 @@ body {
     margin: 0 auto;
     background: var(--card-bg);
     padding: 2rem;
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: var(--shadow);
     border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
-}
-
-.chat-container:hover {
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .chat-title {
@@ -82,14 +59,14 @@ body {
     border: 1px solid var(--border-color);
     padding: 1.5rem;
     margin-bottom: 1.5rem;
-    border-radius: 12px;
+    border-radius: 8px;
     background: var(--bg-color);
     scroll-behavior: smooth;
 }
 
 /* Scrollbar styling */
 .chat-box::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 .chat-box::-webkit-scrollbar-track {
@@ -117,7 +94,7 @@ body {
     flex: 1;
     padding: 1rem;
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 8px;
     resize: vertical;
     min-height: 60px;
     background: var(--bg-color);
@@ -131,7 +108,7 @@ body {
 .input-area textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(13, 135, 105, 0.2);
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
 }
 
 .input-area button {
@@ -140,32 +117,24 @@ body {
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 12px;
+    border-radius: 4px;
     cursor: pointer;
     font-weight: 600;
     transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
 }
 
 .input-area button:hover {
     background-color: var(--secondary-color);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-
-.input-area button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .message {
     margin-bottom: 1.5rem;
     padding: 1rem 1.25rem;
-    border-radius: 12px;
+    border-radius: 8px;
     white-space: pre-wrap;
     line-height: 1.6;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     position: relative;
     max-width: 75%;
 }
@@ -174,45 +143,24 @@ body {
     background: var(--primary-color);
     color: white;
     margin-left: auto;
-    border-radius: 18px 18px 0 18px;
+    border-radius: 8px 8px 0 8px;
 }
 
 .ai-message {
     background: var(--card-bg);
     color: var(--text-color);
     margin-right: auto;
-    border-radius: 18px 18px 18px 0;
+    border-radius: 8px 8px 8px 0;
     border: 1px solid var(--border-color);
 }
 
-.user-message:before,
-.ai-message:before {
-    content: "";
-    position: absolute;
-    bottom: -0.5rem;
-    width: 0.5rem;
-    height: 0.5rem;
-}
-
-.user-message:before {
-    right: 0.5rem;
-    border-right: 0.5rem solid var(--primary-color);
-    border-bottom: 0.5rem solid transparent;
-}
-
-.ai-message:before {
-    left: 0.5rem;
-    border-left: 0.5rem solid var(--card-bg);
-    border-bottom: 0.5rem solid transparent;
-}
-
 .error-message {
-    background: #ffebee;
-    color: #c62828;
+    background: #B71C1C;  /* Dark red for error messages */
+    color: white;
     margin: 0 auto;
     text-align: center;
     max-width: 80%;
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 0.75rem;
     font-size: 0.9rem;
 }
@@ -231,16 +179,50 @@ body {
     animation: fadeIn 0.3s ease-out;
 }
 
-/* Timestamps and details */
-.message-timestamp {
-    font-size: 0.75rem;
-    opacity: 0.7;
-    margin-top: 5px;
-    text-align: right;
+/* Arabic text styling for Quranic verses */
+.arabic-text {
+    font-family: 'Scheherazade New', 'Noto Sans Arabic', serif;
+    font-size: 1.2em;
+    line-height: 1.8;
+    direction: rtl;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background-color: rgba(76, 175, 80, 0.05);
+    border-right: 3px solid var(--primary-color);
+    border-radius: 4px;
 }
 
-.ai-message .message-timestamp {
-    text-align: left;
+/* Citation styling */
+.citation {
+    font-style: italic;
+    color: var(--light-text);
+    font-size: 0.9em;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Quick response buttons */
+.quick-responses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.quick-response-btn {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-response-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
 }
 
 /* Chat Mobile Responsiveness */
@@ -271,50 +253,4 @@ body {
     .message {
         max-width: 85%;
     }
-}
-
-/* Arabic text styling for Quranic verses */
-.arabic-text {
-    font-family: 'Scheherazade New', 'Noto Sans Arabic', serif;
-    font-size: 1.2em;
-    line-height: 1.8;
-    direction: rtl;
-    margin: 1rem 0;
-    padding: 0.5rem;
-    background-color: rgba(0, 0, 0, 0.03);
-    border-right: 3px solid var(--accent-color);
-    border-radius: 4px;
-}
-
-/* Citation styling */
-.citation {
-    font-style: italic;
-    color: var(--light-text);
-    font-size: 0.9em;
-    display: block;
-    margin-top: 5px;
-}
-
-/* Quick response buttons */
-.quick-responses {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-}
-
-.quick-response-btn {
-    background-color: rgba(13, 135, 105, 0.1);
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-    border-radius: 20px;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.quick-response-btn:hover {
-    background-color: var(--primary-color);
-    color: white;
 }
